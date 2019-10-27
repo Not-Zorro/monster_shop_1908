@@ -75,5 +75,15 @@ describe Order, type: :model do
 
       expect(@order_3.items_of_merchant(@merchant_employee.merchant_id)).to eq(expected)
     end
+
+    it 'returns true if all item_orders are fulfilled' do
+      expect(@order_1.all_items_fulfilled?).to be_falsy
+
+      @order_1.item_orders.each do |item_order|
+        item_order.update(status: 'fulfilled')
+      end 
+
+      expect(@order_1.all_items_fulfilled?).to be_truthy
+    end
   end
 end

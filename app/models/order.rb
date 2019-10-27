@@ -38,4 +38,8 @@ class Order <ApplicationRecord
   def grand_total_for_merchant(merchant_id)
     item_orders.joins(:item).where(items: {merchant_id: merchant_id}).sum('item_orders.quantity * item_orders.price')
   end
+
+  def all_items_fulfilled?
+    item_orders.where(status: 'pending').empty?
+  end
 end

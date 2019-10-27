@@ -29,4 +29,12 @@ class Item <ApplicationRecord
     item_orders.find_by(order_id: order_id).quantity
   end
 
+  def fulfilled?(order_id)
+    item_orders.find_by(order_id: order_id).status == 'fulfilled'
+  end
+
+  def can_fulfill?(order_id)
+    inventory >= quantity_ordered(order_id)
+  end
+
 end

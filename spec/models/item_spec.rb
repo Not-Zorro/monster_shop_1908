@@ -55,5 +55,21 @@ describe Item, type: :model do
 
       expect(@chain.quantity_ordered(order_1.id)).to eq 2
     end
+
+    it 'returns boolean of fulfillment status' do
+      user = User.create(name: 'Bob J', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
+      item_order_1 = order_1.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
+
+      expect(@chain.fulfilled?(order_1.id)).to be_falsy
+    end
+
+    it 'returns boolean of can_fulfill status' do
+      user = User.create(name: 'Bob J', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
+      item_order_1 = order_1.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
+
+      expect(@chain.can_fulfill?(order_1.id)).to be_truthy
+    end
   end
 end

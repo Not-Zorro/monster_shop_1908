@@ -7,9 +7,15 @@
 
 <% @order.items_of_merchant(current_user.merchant_id).each do |item| %>
   <section id="item-<%=item.id %>">
+    <% if item.fulfilled?(@order.id) %>
+      <p>Status: fulfilled</p>
+    <% end %>
     <%= link_to item.name, "/items/#{item.id}" %>
     <%= image_tag item.image %>
     <p>Item Price: <%= number_to_currency(item.price) %></p>
     <p>Quantity Ordered: <%= item.quantity_ordered(@order.id)%></p>
+    <% if !item.fulfilled?(@order.id) && item.can_fulfill?(@order.id) %>
+      <%= link_to 'fulfill', "/merchant/orders/#{@order.id}/items/#{item.id}", method: :patch %>
+    <% end %>
   </section>
 <% end %>

@@ -21,6 +21,9 @@
         <% elsif !item.active? && current_merchant_admin? %>
           <%= button_to 'Activate', "/merchant/items/#{item.id}/enable", method: :patch %>
         <% end %>
+        <% if item.no_orders? && current_merchant_admin? %>
+          <%= button_to 'Delete Item', "/merchant/items/#{item.id}", method: :delete %>
+        <% end  %>
       </section>
     <% end  %>
   <% end %>

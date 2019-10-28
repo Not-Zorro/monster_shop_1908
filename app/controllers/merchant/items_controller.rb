@@ -1,7 +1,7 @@
 class Merchant::ItemsController < Merchant::BaseController
 
   def index
-
+    @merchant = Merchant.find(current_user.merchant_id)
   end
 
   def fulfill
@@ -14,6 +14,13 @@ class Merchant::ItemsController < Merchant::BaseController
     order.update(status: 'packaged') if order.all_items_fulfilled?
     flash[:success] = "You have fulfilled #{item.name}."
     redirect_to "/merchant/orders/#{params[:order_id]}"
+  end
+
+  def deactivate
+    item = Item.find(params[:id])
+    item.update(active?: false)
+    flash[:success] = "#{item.name} is no longer for sale"
+    redirect_to '/merchant/items'
   end
 
 end

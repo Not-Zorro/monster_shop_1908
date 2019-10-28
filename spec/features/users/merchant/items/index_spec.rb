@@ -71,42 +71,5 @@ describe 'as a merchant admin' do
         expect(page).to_not have_button('Activate')
       end
     end
-
-    it 'has a button/link to delete an item that has never been ordered' do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
-      visit '/merchant/items'
-
-      within "#item-#{@pull_toy.id}" do
-        expect(page).to have_button('Delete Item')
-      end
-
-      order = @user.orders.create!(name: @user.name, address: @user.address, city: @user.city, state: @user.state, zip: @user.zip, user_id: @user.id)
-      @item_order_1 = order.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 2)
-
-      visit '/merchant/items'
-
-      within "#item-#{@pull_toy.id}" do
-        expect(page).to_not have_button('Delete Item')
-      end
-
-      within "#item-#{@dog_bone.id}" do
-        click_button('Delete Item')
-      end
-
-      expect(current_path).to eq('/merchant/items')
-      expect(page).to have_content("Dog Bone has been deleted")
-
-      expect(page).to_not have_css("#item-#{@dog_bone.id}")
-
-    end
-
-    it "Can not delete item as a merchant_employee" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
-      visit '/merchant/items'
-
-      within "#item-#{@pull_toy.id}" do
-        expect(page).to_not have_button('Delete Item')
-      end
-    end
   end
 end

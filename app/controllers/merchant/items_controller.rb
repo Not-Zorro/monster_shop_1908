@@ -18,6 +18,22 @@ class Merchant::ItemsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    if @item.save
+      flash[:success] = "#{@item.name} has been updated"
+      redirect_to "/merchant/items"
+    else
+      flash.now[:error] = @item.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
   def fulfill
     item = Item.find(params[:item_id])
     item_order = item.item_orders.find_by(order_id: params[:order_id])

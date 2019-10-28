@@ -17,7 +17,7 @@
         <p>Inventory: <%= item.inventory %> </p>
         <% if !@merchant %>
         <% end %>
-        <% if item.active? %>
+        <% if item.active? && current_merchant_admin? %>
           <p>Active</p>
           <%= button_to 'Deactivate', "/merchant/items/#{item.id}", method: :patch %>
         <% else %>

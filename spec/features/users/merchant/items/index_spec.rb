@@ -13,8 +13,6 @@ describe 'as a merchant admin' do
       @dog_bone = @chester_the_merchant.items.create!(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
       @ball = @chester_the_merchant.items.create!(name: "Tennis ball", description: "It's Green!", price: 1, image: "https://www.salemacademycs.org/wp-content/uploads/Tennis-balls.jpg", inventory: 500, active?: false)
-
-
     end
     it 'click button to deactivate item' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)

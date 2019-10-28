@@ -17,7 +17,6 @@ RSpec.describe 'Cart show with items in cart' do
     @items_in_cart = [@paper,@tire,@pencil]
   end
   describe 'When I have added items to my cart as a visitor' do
-    # this is our sad path for user sotry 23 to edit
 
     it 'Theres a link to checkout that flashes an error message' do
       visit "/cart"

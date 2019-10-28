@@ -23,8 +23,8 @@ Rails.application.routes.draw do
 
   get '/items', to: 'items#index'
   get '/items/:id', to: 'items#show'
-  get '/items/:id/edit', to: 'items#edit'
-  patch '/items/:id', to: 'items#update'
+  # get '/items/:id/edit', to: 'items#edit'
+  # patch '/items/:id', to: 'items#update'
   get '/merchants/:merchant_id/items', to: 'items#index'
   # get '/merchants/:merchant_id/items/new', to: 'items#new'
   # post '/merchants/:merchant_id/items', to: 'items#create'
@@ -54,12 +54,14 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#index'
     get "/items", to: 'items#index'
     get "/items/new", to: 'items#new'
-    get '/orders/:id', to: 'orders#show'
     post "/items", to: 'items#create'
-    patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
+    get "/items/:id/edit", to: 'items#edit'
+    patch "/items/:id", to: 'items#update'
+    delete '/items/:id', to: 'items#destroy'
     patch '/items/:id/disable', to: 'items#deactivate'
     patch '/items/:id/enable', to: 'items#activate'
-    delete '/items/:id', to: 'items#destroy'
+    patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
+    get '/orders/:id', to: 'orders#show'
   end
 
   get '/admin', to: 'admin/dashboard#index'

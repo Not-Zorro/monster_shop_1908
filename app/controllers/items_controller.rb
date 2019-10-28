@@ -13,26 +13,4 @@ class ItemsController<ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def edit
-    @item = Item.find(params[:id])
-  end
-
-  def update
-    @item = Item.find(params[:id])
-    @item.update(item_params)
-    if @item.save
-      redirect_to "/items/#{@item.id}"
-    else
-      flash[:error] = @item.errors.full_messages.to_sentence
-      render :edit
-    end
-  end
-
-  private
-
-  def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
-  end
-
-
 end

@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
     patch '/items/:id/disable', to: 'items#deactivate'
     patch '/items/:id/enable', to: 'items#activate'
+    delete '/items/:id', to: 'items#destroy'
   end
 
   get '/admin', to: 'admin/dashboard#index'

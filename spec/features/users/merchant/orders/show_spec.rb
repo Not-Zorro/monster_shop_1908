@@ -20,6 +20,10 @@ describe 'On an order show page linked from a merchant dashboard' do
       @item_order_2 = @order.item_orders.create!(item: @dog_bone, price: @dog_bone.price, quantity: 1)
       @item_order_3 = @order.item_orders.create!(item: @tire, price: @tire.price, quantity: 1)
 
+      @order_2 = @user.orders.create!(name: @user.name, address: @user.address, city: @user.city, state: @user.state, zip: @user.zip, user_id: @user.id)
+      @item_order_4 = @order_2.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 99)
+
+
       @users = [@merchant_employee, merchant_admin]
     end
 
@@ -87,5 +91,22 @@ describe 'On an order show page linked from a merchant dashboard' do
 
       expect(page).to have_content('Inventory: 30')
     end
+
+    it 'if item inventory is less than qunatity ordered the order can not be fufilled' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
+      visit "/merchant/orders/#{@order_2.id}"
+
+      within "#item-#{@pull_toy.id}" do
+        expect(page).to_not have_link 'fufill'
+        expect(page).to have_content('Can not fufill item')
+      end
+    end
   end
 end
+
+# As a merchant employee or admin
+# When I visit an order show page from my dashboard
+# For each item of mine in the order
+# If the user's desired quantity is greater than my current inventory quantity for that item
+# Then I do not see a "fulfill" button or link
+# Instead I see a notice next to the item indicating I cannot fulfill this item

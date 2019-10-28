@@ -7,13 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:notice] = "Signed in as #{user.name}"
-      if current_admin?
-        redirect_to '/admin'
-      elsif current_merchant_employee? || current_merchant_admin?
-        redirect_to '/merchant'
-      else
-        redirect_to '/profile'
-      end
+      redirect_role
     else
       flash.now[:error] = "Sorry your credentials are bad."
       render :new
@@ -25,4 +19,16 @@ class SessionsController < ApplicationController
     flash[:success] = 'You have logged out.'
     redirect_to '/'
   end
+
+  private
+
+    def redirect_role
+      if current_admin?
+        redirect_to '/admin'
+      elsif current_merchant_employee? || current_merchant_admin?
+        redirect_to '/merchant'
+      else
+        redirect_to '/profile'
+      end
+    end
 end

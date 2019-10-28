@@ -37,4 +37,12 @@ class Item <ApplicationRecord
     inventory >= quantity_ordered(order_id)
   end
 
+  def status
+    if active?
+      'Active'
+    else
+      'Inactive'
+    end
+  end
+
 end

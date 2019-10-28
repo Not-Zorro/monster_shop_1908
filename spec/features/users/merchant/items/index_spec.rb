@@ -33,12 +33,13 @@ describe 'as a merchant admin' do
       end
     end
 
+    it "Can not deactivate or see button as a merchant_employee" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
+      visit '/merchant/items'
+
+      within "#item-#{@pull_toy.id}" do
+        expect(page).to_not have_button('Deactivate')
+      end
+    end
   end
 end
-# As a merchant admin
-# When I visit my items page
-# I see a link or button to deactivate the item next to each item that is active
-# And I click on the "deactivate" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is no longer for sale
-# I see the item is now inactive

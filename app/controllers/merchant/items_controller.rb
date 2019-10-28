@@ -20,6 +20,13 @@ class Merchant::ItemsController < Merchant::BaseController
     redirect_to '/merchant/items'
   end
 
+  def activate
+    item = Item.find(params[:id])
+    item.update(active?: true)
+    flash[:success] = "#{item.name} is for sale"
+    redirect_to '/merchant/items'
+  end
+
   private
 
     def fufill_update(item_order, item, order)

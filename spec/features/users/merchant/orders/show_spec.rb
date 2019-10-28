@@ -103,10 +103,3 @@ describe 'On an order show page linked from a merchant dashboard' do
     end
   end
 end
-
-# As a merchant employee or admin
-# When I visit an order show page from my dashboard
-# For each item of mine in the order
-# If the user's desired quantity is greater than my current inventory quantity for that item
-# Then I do not see a "fulfill" button or link
-# Instead I see a notice next to the item indicating I cannot fulfill this item

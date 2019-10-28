@@ -71,5 +71,12 @@ describe Item, type: :model do
 
       expect(@chain.can_fulfill?(order_1.id)).to be_truthy
     end
+
+    it "can return its active status" do
+      ball = @bike_shop.items.create!(name: "Tennis ball", description: "It's Green!", price: 1, image: "https://www.salemacademycs.org/wp-content/uploads/Tennis-balls.jpg", inventory: 500, active?: false)
+
+      expect(@chain.status).to eq('Active')
+      expect(ball.status).to eq('Inactive')
+    end
   end
 end

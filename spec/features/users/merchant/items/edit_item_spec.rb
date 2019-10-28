@@ -42,7 +42,7 @@ describe 'as a merchant admin' do
       end
     end
 
-    it 'does not update an item if a field is nil' do
+    it 'does not update an item if a field is nil and repopulates form' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
       visit '/merchant/items'
 
@@ -55,6 +55,12 @@ describe 'as a merchant admin' do
       click_button "Update Item"
 
       expect(page).to have_content("Price can't be blank")
+
+      expect(find_field('Name').value).to eq "Pull Toy"
+      expect(find_field('Price').value).to eq '$10.00'
+      expect(find_field('Description').value).to eq "Great pull toy!"
+      expect(find_field('Image').value).to eq("http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg")
+      expect(find_field('Inventory').value).to eq '32'
     end
 
     it 'I can see the prepopulated fields of that item' do

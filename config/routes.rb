@@ -55,7 +55,8 @@ Rails.application.routes.draw do
     get "/items", to: 'items#index'
     get '/orders/:id', to: 'orders#show'
     patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
-    patch '/items/:id', to: 'items#deactivate'
+    patch '/items/:id/disable', to: 'items#deactivate'
+    patch '/items/:id/enable', to: 'items#activate'
   end
 
   get '/admin', to: 'admin/dashboard#index'

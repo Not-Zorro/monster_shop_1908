@@ -26,9 +26,9 @@ Rails.application.routes.draw do
   get '/items/:id/edit', to: 'items#edit'
   patch '/items/:id', to: 'items#update'
   get '/merchants/:merchant_id/items', to: 'items#index'
-  get '/merchants/:merchant_id/items/new', to: 'items#new'
-  post '/merchants/:merchant_id/items', to: 'items#create'
-  delete '/items/:id', to: 'items#destroy'
+  # get '/merchants/:merchant_id/items/new', to: 'items#new'
+  # post '/merchants/:merchant_id/items', to: 'items#create'
+  # delete '/items/:id', to: 'items#destroy'
 
   get '/items/:item_id/reviews/new', to: 'reviews#new'
   post '/items/:item_id/reviews', to: 'reviews#create'
@@ -53,7 +53,9 @@ Rails.application.routes.draw do
   namespace :merchant do
     get '/', to: 'dashboard#index'
     get "/items", to: 'items#index'
+    get "/items/new", to: 'items#new'
     get '/orders/:id', to: 'orders#show'
+    post "/items", to: 'items#create'
     patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
     patch '/items/:id/disable', to: 'items#deactivate'
     patch '/items/:id/enable', to: 'items#activate'

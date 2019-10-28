@@ -14,62 +14,57 @@ describe 'as a merchant admin' do
 
       @ball = @chester_the_merchant.items.create!(name: "Tennis ball", description: "It's Green!", price: 1, image: "https://www.salemacademycs.org/wp-content/uploads/Tennis-balls.jpg", inventory: 500, active?: false)
 
+      @review_1 = @pull_toy.reviews.create(title: "Great place!", content: "Good toy", rating: 5)
 
     end
-    it 'click button to deactivate item' do
+
+    it 'has a button/link to delete an item that has never been ordered' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
       visit '/merchant/items'
 
       within "#item-#{@pull_toy.id}" do
-        click_button 'Deactivate'
+        expect(page).to have_button('Delete Item')
+      end
+
+      order = @user.orders.create!(name: @user.name, address: @user.address, city: @user.city, state: @user.state, zip: @user.zip, user_id: @user.id)
+      @item_order_1 = order.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 2)
+
+      visit '/merchant/items'
+
+      within "#item-#{@pull_toy.id}" do
+        expect(page).to_not have_button('Delete Item')
       end
 
       within "#item-#{@dog_bone.id}" do
-        expect(page).to_not have_button('Deactivate')
+        click_button('Delete Item')
       end
 
       expect(current_path).to eq('/merchant/items')
+      expect(page).to have_content("Dog Bone has been deleted")
 
-      expect(page).to have_content("#{@pull_toy.name} is no longer for sale")
+      expect(page).to_not have_css("#item-#{@dog_bone.id}")
 
-      within "#item-#{@pull_toy.id}" do
-        expect(page).to have_content('Inactive')
-      end
     end
 
-    it "Can not deactivate or see button as a merchant_employee" do
+    it "Can not delete item as a merchant_employee" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
       visit '/merchant/items'
 
       within "#item-#{@pull_toy.id}" do
-        expect(page).to_not have_button('Deactivate')
+        expect(page).to_not have_button('Delete Item')
       end
     end
 
-    it 'click button to activate item' do
+    it 'I can delete items and it deletes reviews' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
-      visit '/merchant/items'
 
-      within "#item-#{@ball.id}" do
-        click_button 'Activate'
+      visit "/merchant/items"
+
+      within "#item-#{@pull_toy.id}" do
+        click_button('Delete Item')
       end
 
-      expect(current_path).to eq('/merchant/items')
-
-      expect(page).to have_content("#{@ball.name} is for sale")
-
-      within "#item-#{@ball.id}" do
-        expect(page).to have_content('Active')
-      end
-    end
-
-    it "Can not activate or see button as a merchant_employee" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
-      visit '/merchant/items'
-
-      within "#item-#{@ball.id}" do
-        expect(page).to_not have_button('Activate')
-      end
+      expect(Review.where(id:@review_1.id)).to be_empty
     end
   end
 end

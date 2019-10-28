@@ -16,6 +16,8 @@
     <p>Quantity Ordered: <%= item.quantity_ordered(@order.id)%></p>
     <% if !item.fulfilled?(@order.id) && item.can_fulfill?(@order.id) %>
       <%= link_to 'fulfill', "/merchant/orders/#{@order.id}/items/#{item.id}", method: :patch %>
+    <% elsif !item.can_fulfill?(@order.id) %>
+     <p>Can not fufill item</p>
     <% end %>
   </section>
 <% end %>

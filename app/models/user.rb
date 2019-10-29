@@ -18,4 +18,8 @@ class User < ApplicationRecord
   def has_orders?
     orders.count > 0
   end
+
+  def created_date
+    created_at.strftime('%B %d, %Y')
+  end
 end

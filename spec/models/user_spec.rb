@@ -72,19 +72,26 @@ describe User, type: :model do
   end
 
   describe 'instance methods' do
-    it 'returns boolean for if a user has orders' do
-      user = User.create( name: 'Bob J',
+    before(:each) do
+      @user = User.create( name: 'Bob J',
                           address: '123 Fake St',
                           city: 'Denver',
                           state: 'Colorado',
                           zip: 80111,
                           email: 'user@user.com',
-                          password: 'password')
+                          password: 'password',
+                          created_at: 'Fri, 18 Oct 2019 21:56:35 UTC +00:00')
+    end
 
-      expect(user.has_orders?).to be_falsy
-      order = user.orders.create!(name: user.name, address: user.address, city: user.city, state: user.state, zip: user.zip)
+    it 'returns boolean for if a user has orders' do
+      expect(@user.has_orders?).to be_falsy
+      order = @user.orders.create!(name: @user.name, address: @user.address, city: @user.city, state: @user.state, zip: @user.zip)
 
-      expect(user.has_orders?).to be_truthy
+      expect(@user.has_orders?).to be_truthy
+    end
+
+    it 'returns a created date in FullMonth Day, Year' do
+      expect(@user.created_date).to eq('October 18, 2019')
     end
   end
 end

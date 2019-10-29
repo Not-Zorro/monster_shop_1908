@@ -5,6 +5,8 @@ class Order <ApplicationRecord
   has_many :items, through: :item_orders
   belongs_to :user
 
+  enum status: [:packaged, :pending, :shipped, :cancelled, :fulfilled]
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
@@ -41,5 +43,9 @@ class Order <ApplicationRecord
 
   def all_items_fulfilled?
     item_orders.where(status: 'pending').empty?
+  end
+
+  def self.dashboard_sort
+    order(:status)
   end
 end

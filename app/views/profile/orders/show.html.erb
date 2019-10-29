@@ -63,4 +63,6 @@
   <p>Total Items: <%= @order.item_count %></p>
 </section>
 
-<%= button_to 'Cancel Order', "/profile/orders/#{@order.id}", method: :patch %>
+<% unless @order.status == 'shipped' || @order.status == 'cancelled'  %>
+  <%= button_to 'Cancel Order', "/profile/orders/#{@order.id}", method: :patch %>
+<% end %>

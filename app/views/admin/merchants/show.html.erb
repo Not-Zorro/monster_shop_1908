@@ -1,1 +1,14 @@
-<h1><%= @merchant.name %></h1>
+<section class='employer-info'>
+    <p><%= @merchant.name %></p>
+    <p><%= @merchant.address %></p>
+    <p><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
+    <section class='pending-orders'>
+      <% @merchant.pending_orders.each do |pending_order| %>
+        <%= link_to "Order #: #{pending_order.id}", "/merchant/orders/#{pending_order.id}"%>
+        <p>Order Date: <%= pending_order.created_date %></p>
+        <p>Item Total: <%= pending_order.item_count_for_merchant(@merchant.id) %></p>
+        <p>Grand Total: <%= pending_order.grand_total_for_merchant(@merchant.id) %></p>
+      <% end  %>
+    </section>
+    <%= link_to "My Merchant's Items", '/merchant/items' %>
+</section>

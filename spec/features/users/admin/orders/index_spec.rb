@@ -63,24 +63,31 @@ describe 'As an Admin on my admin dashboard' do
 
       expect(page).to have_content('packaged')
     end
+  end
+
+  it 'has a button to ship an order next to packaged orders' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit '/admin'
+
+    within "#order-#{@order_3.id}" do
+      expect(page).to_not have_button("Ship Order")
+    end
+
+    within "#order-#{@order_4.id}" do
+      expect(page).to have_button("Ship Order")
+      click_button("Ship Order")
+    end
+
+    within "#order-#{@order_4.id}" do
+      expect(page).to have_content('shipped')
+      expect(page).to_not have_button("Ship Order")
+    end
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    visit "/profile/orders/#{@order_4.id}"
+
+    expect(page).to have_content('Shipped')
+    expect(page).to_not have_button "Cancel Order"
 
   end
 end
-
-
-
-# As an admin user
-# When I visit my admin dashboard ("/admin")
-# Then I see all orders in the system.
-# For each order I see the following information:
-#
-# - user who placed the order, which links to admin view of user profile
-# - order id
-# - date the order was created
-#
-# Orders are sorted by "status" in this order:
-#
-# - packaged
-# - pending
-# - shipped
-# - cancelled

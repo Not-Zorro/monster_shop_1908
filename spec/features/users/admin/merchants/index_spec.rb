@@ -31,10 +31,15 @@ describe 'As an Admin on the /merchants index' do
     within "#merchant-#{@chester_the_merchant.id}" do
       click_button 'Disable'
       expect(page).to have_button 'Enable'
+    end
+
+    expect(page).to have_content("#{@chester_the_merchant.name} has been disabled")
+
+    within "#merchant-#{@chester_the_merchant.id}" do
       click_button 'Enable'
       expect(page).to have_button 'Disable'
     end
-
+    expect(page).to have_content("#{@chester_the_merchant.name} has been enabled")
     within "#merchant-#{@chester_the_merchant.id}" do
       click_link("Chester's Shop")
     end

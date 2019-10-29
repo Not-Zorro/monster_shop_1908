@@ -44,7 +44,6 @@ describe "Admin users index page" do
       expect(page).to have_content(@admin.created_date)
       expect(page).to have_content(@admin.role)
     end
-    save_and_open_page
   end
 
   it "as a user we can not visit the admin users page" do
@@ -62,12 +61,3 @@ describe "Admin users index page" do
     end
   end
 end
-
-# As an admin user
-# When I click the "Users" link in the nav (only visible to admins)
-# Then my current URI route is "/admin/users"
-# Only admin users can reach this path.
-# I see all users in the system
-# Each user's name is a link to a show page for that user ("/admin/users/5")
-# Next to each user's name is the date they registered
-# Next to each user's name I see what type of user they are

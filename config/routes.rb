@@ -64,5 +64,10 @@ Rails.application.routes.draw do
     get '/orders/:id', to: 'orders#show'
   end
 
-  get '/admin', to: 'admin/dashboard#index'
+  namespace :admin do
+    get '/', to: 'dashboard#index'
+    patch '/orders/:id/ship', to: 'orders#ship'
+  end
+
+
 end

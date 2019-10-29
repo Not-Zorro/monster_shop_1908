@@ -28,12 +28,7 @@ describe "Admin users index page" do
       expect(page).to have_content("Zip: #{@user.zip}")
       expect(page).to have_content("Email: #{@user.email}")
     end
-    
+
     expect(page).to_not have_link('Edit Profile')
   end
 end
-
-# As an admin user
-# When I visit a user's profile page ("/admin/users/5")
-# I see the same information the user would see themselves
-# I do not see a link to edit their profile

@@ -67,8 +67,9 @@ describe Merchant, type: :model do
       order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2)
       order_3.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: 'fulfilled')
 
-      expected = [order_1, order_2]
-      expect(@meg.pending_orders).to eq(expected)
+      meg_expected_order = @meg.pending_orders.include?(order_1) && @meg.pending_orders.include?(order_2)
+
+      expect(meg_expected_order).to be_truthy
     end
 
   end

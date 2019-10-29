@@ -1,0 +1,12 @@
+<h1>Admin Dashboard</h1>
+
+<section class = 'orders'>
+  <% @sorted_orders.each do |order| %>
+    <section id = "order-<%=order.id%>">
+      <p>Ordered by: <%= link_to order.name %></p>
+      <p>Order #: <%= order.id %></p>
+      <p>Order Date: <%= order.created_date %></p>
+      <p>Order Status: <%= order.status %></p>
+    </section>
+  <% end %>
+</section>

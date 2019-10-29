@@ -70,5 +70,6 @@ describe Merchant, type: :model do
       expected = [order_1, order_2]
       expect(@meg.pending_orders).to eq(expected)
     end
+
   end
 end

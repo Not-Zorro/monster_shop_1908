@@ -59,7 +59,7 @@ describe 'As an Admin on the /merchants index' do
     expect(page).to have_content(dog_bone.name)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     visit '/merchants'
-    
+
     within "#merchant-#{@chester_the_merchant.id}" do
       click_link("Chester's Shop")
     end
@@ -77,4 +77,16 @@ describe 'As an Admin on the /merchants index' do
       expect(page).to_not have_button('Disable')
     end
   end
+
+  it 'I can see a link to create a new merchant' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit '/merchants'
+
+    expect(page).to have_link("New Merchant")
+
+    click_on "New Merchant"
+
+    expect(current_path).to eq("/admin/merchants/new")
+  end
+
 end

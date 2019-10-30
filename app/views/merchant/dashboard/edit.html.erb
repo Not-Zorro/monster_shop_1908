@@ -1,4 +1,4 @@
-<h1>Edit <%=link_to current_user.merchant.name, "/merchant/merchants/#{current_user.merchant.id}" %></h1>
+<h1>Edit <%=link_to current_user.merchant.name, "/merchants/#{current_user.merchant.id}" %></h1>
 <center>
   <%= form_tag "/merchant/merchants/#{current_user.merchant.id}", method: :patch do %>
     <%= label_tag :name %>

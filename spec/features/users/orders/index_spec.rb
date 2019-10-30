@@ -34,7 +34,7 @@ describe 'When I visit a Profile Orders page (eg profile/orders#index), /profile
         expect(page).to have_content("Last Updated: #{@order_1.updated_date}")
         expect(page).to have_content("Order Status: #{@order_1.status.capitalize}")
         expect(page).to have_content("Item Total: #{@order_1.item_count}")
-        expect(page).to have_content("Grand Total: #{@order_1.grandtotal}")
+        expect(page).to have_content("Grand Total: $#{@order_1.grandtotal}")
       end
 
       within "#order-#{@order_2.id}" do
@@ -43,7 +43,7 @@ describe 'When I visit a Profile Orders page (eg profile/orders#index), /profile
         expect(page).to have_content("Last Updated: #{@order_2.updated_date}")
         expect(page).to have_content("Order Status: #{@order_2.status.capitalize}")
         expect(page).to have_content("Item Total: #{@order_2.item_count}")
-        expect(page).to have_content("Grand Total: #{@order_2.grandtotal}")
+        expect(page).to have_content("Grand Total: $#{@order_2.grandtotal}")
       end
     end
 

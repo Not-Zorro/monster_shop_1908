@@ -5,6 +5,9 @@
       <p><%= current_user.merchant.name %></p>
       <p><%= current_user.merchant.address %></p>
       <p><%= current_user.merchant.city %>, <%= current_user.merchant.state %> <%= current_user.merchant.zip %></p>
+      <% if current_merchant_admin? %>
+        <%= link_to "Update Merchant", "/merchant/merchants/#{current_user.merchant.id}/edit" %>
+      <% end %>
       <section class='pending-orders'>
         <% current_user.merchant.pending_orders.each do |pending_order| %>
           <%= link_to "Order #: #{pending_order.id}", "/merchant/orders/#{pending_order.id}"%>

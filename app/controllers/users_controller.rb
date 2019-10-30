@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    current_user
   end
 
   def update
@@ -31,7 +31,6 @@ class UsersController < ApplicationController
       redirect_to '/profile'
     else
       flash.now[:error] = user.errors.full_messages.to_sentence
-      @user = user
       render :edit
     end
   end
@@ -69,7 +68,6 @@ class UsersController < ApplicationController
     end
 
     def password_blank(password_params)
-      return true if password_params[:password].length == 0
-      false
+      password_params[:password].length == 0
     end
 end

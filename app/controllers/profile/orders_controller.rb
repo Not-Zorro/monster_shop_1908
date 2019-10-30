@@ -1,5 +1,5 @@
 class Profile::OrdersController < ApplicationController
-
+  before_action :check_admin, only: [:show, :index]
   def index
   end
 
@@ -37,6 +37,10 @@ class Profile::OrdersController < ApplicationController
 
 
   private
+
+  def check_admin
+    render file: '/public/404' if current_admin?
+  end
 
   def order_params
     {user_id: current_user.id, name: current_user.name, address: current_user.address, city: current_user.city, state: current_user.state, zip: current_user.zip}

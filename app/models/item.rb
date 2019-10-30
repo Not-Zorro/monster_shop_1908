@@ -45,4 +45,14 @@ class Item <ApplicationRecord
     end
   end
 
+  def self.item_stats(order)
+    item_id_hash = joins(:item_orders).order("sum_item_orders_quantity #{order}").limit(5).group("item_orders.item_id").sum("item_orders.quantity")
+
+    item_name_hash = Hash.new
+    item_id_hash.each do |id, quantity|
+      item_name_hash[Item.find(id)] = quantity
+    end
+    item_name_hash
+  end
+
 end

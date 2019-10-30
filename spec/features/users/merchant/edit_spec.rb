@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe "As a merchant_admin" do
-  describe "After visiting a merchants show page and clicking on updating that merchant" do
+  describe "After visiting my dashboard and clicking on updating that merchant" do
     before(:each) do
       @chester_the_merchant = Merchant.create!(name: "Chester's Shop", address: '456 Terrier Rd.', city: 'Richmond', state: 'VA', zip: 23137)
       @bike_shop = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       chain = @bike_shop.items.create!(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       @user = User.create!(name: 'Customer Sally', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
       @merchant_employee = @chester_the_merchant.users.create!(name: 'Drone', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'employee@employee.com', password: 'password', role: 1 )
-      @merchant_admin = @chester_the_merchant.users.create!(name: 'Boss', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'boss@boss.com', password: 'password', role: 2 )
+      @merchant_admin = @bike_shop.users.create!(name: 'Boss', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'boss@boss.com', password: 'password', role: 2 )
       @admin = User.create!(name: 'Admin Foxy', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'admin@admin.com', password: 'password', role: 3)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
     end
 
     it 'I can see prepopulated info on that user in the edit form' do
-      visit "/merchant/merchants/#{@bike_shop.id}"
+      visit "/merchant"
       click_on "Update Merchant"
 
       expect(page).to have_link(@bike_shop.name)
@@ -27,7 +27,7 @@ RSpec.describe "As a merchant_admin" do
     end
 
     it 'I can edit merchant info by filling in the form and clicking submit' do
-      visit "/merchant/merchants/#{@bike_shop.id}"
+      visit "/merchant"
       click_on "Update Merchant"
 
       fill_in 'Name', with: "Brian's Super Cool Bike Shop"
@@ -44,7 +44,7 @@ RSpec.describe "As a merchant_admin" do
     end
 
     it 'I see a flash message if i dont fully complete form' do
-      visit "/merchant/merchants/#{@bike_shop.id}"
+      visit "/merchant"
       click_on "Update Merchant"
 
       fill_in 'Name', with: ""

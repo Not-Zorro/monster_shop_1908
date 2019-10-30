@@ -1,12 +1,8 @@
 class User < ApplicationRecord
-  validates_presence_of :name, :address, :city, :state, :zip, :email
+  validates_presence_of :name, :address, :city, :state, :zip, :email, :password_digest
 
   validates :email, uniqueness: true
-  validates :password,
-            presence: true,
-            length: { minimum: 2 },
-            confirmation: { case_sensitive: true },
-            :if => :password
+  validates :password, confirmation: { case_sensitive: true }
 
   has_many :orders
   belongs_to :merchant, optional: true

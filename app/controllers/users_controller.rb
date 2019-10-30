@@ -40,13 +40,18 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    current_user.update(password_params)
-    if current_user.save
-      flash[:success] = 'Your password has been changed.'
-      redirect_to '/profile'
-    else
-      flash.now[:error] = current_user.errors.full_messages.first
+    if password_blank(password_params)
+      flash.now[:error] = "Password can't be blank"
       render :edit_password
+    else
+      current_user.update(password_params)
+      if current_user.save
+        flash[:success] = 'Your password has been changed.'
+        redirect_to '/profile'
+      else
+        flash.now[:error] = current_user.errors.full_messages.first
+        render :edit_password
+      end
     end
   end
 
@@ -61,5 +66,10 @@ class UsersController < ApplicationController
 
     def password_params
       params.permit(:password,:password_confirmation)
+    end
+
+    def password_blank(password_params)
+      return true if password_params[:password].length == 0
+      false
     end
 end

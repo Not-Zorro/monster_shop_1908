@@ -14,12 +14,7 @@ Rails.application.routes.draw do
   patch '/profile/update', to: 'users#update'
 
   get '/merchants', to: 'merchants#index'
-  get '/merchants/new', to: 'merchants#new'
   get '/merchants/:id', to: 'merchants#show'
-  post '/merchants', to: 'merchants#create'
-  get '/merchants/:id/edit', to: 'merchants#edit'
-  patch '/merchants/:id', to: 'merchants#update'
-  delete '/merchants/:id', to: 'merchants#destroy'
 
   get '/items', to: 'items#index'
   get '/items/:id', to: 'items#show'
@@ -62,14 +57,21 @@ Rails.application.routes.draw do
     patch '/items/:id/enable', to: 'items#activate'
     patch '/orders/:order_id/items/:item_id', to: 'items#fulfill'
     get '/orders/:id', to: 'orders#show'
+    get '/merchants/:id/edit', to: 'dashboard#edit'
+    patch '/merchants/:id', to: 'dashboard#update'
   end
 
   namespace :admin do
     get '/', to: 'dashboard#index'
     patch '/orders/:id/ship', to: 'orders#ship'
+    get '/merchants/new', to: 'merchants#new'
+    post '/merchants', to: 'merchants#create'
     get '/merchants/:id', to: 'merchants#show'
+    get '/merchants/:id/edit', to: 'merchants#edit'
+    patch '/merchants/:id', to: 'merchants#update'
     patch '/merchants/:id/disable', to: 'merchants#disable'
     patch '/merchants/:id/enable', to: 'merchants#enable'
+    delete '/merchants/:id', to: 'merchants#destroy'
     get '/users', to: 'users#index'
     get '/users/:id', to: 'users#show'
   end

@@ -1,9 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe 'merchant new page', type: :feature do
-  describe 'As a user' do
+  describe 'As an admin' do
+    before(:each) do
+      @chester_the_merchant = Merchant.create!(name: "Chester's Shop", address: '456 Terrier Rd.', city: 'Richmond', state: 'VA', zip: 23137)
+      @bike_shop = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+      @user = User.create!(name: 'Customer Sally', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
+      @merchant_employee = @chester_the_merchant.users.create!(name: 'Drone', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'employee@employee.com', password: 'password', role: 1 )
+      @merchant_admin = @chester_the_merchant.users.create!(name: 'Boss', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'boss@boss.com', password: 'password', role: 2 )
+      @admin = User.create!(name: 'Admin Foxy', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'admin@admin.com', password: 'password', role: 3)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+
+    end
+
     it 'I can create a new merchant' do
-      visit '/merchants/new'
+      visit '/admin/merchants/new'
 
       name = "Sal's Calz(ones)"
       address = '123 Kindalikeapizza Dr.'
@@ -29,8 +41,9 @@ RSpec.describe 'merchant new page', type: :feature do
       expect(new_merchant.state).to eq(state)
       expect(new_merchant.zip).to eq(zip)
     end
+
     it 'I cant create a merchant if all fields are not filled in' do
-      visit '/merchants/new'
+      visit '/admin/merchants/new'
 
       name = "Sal's Calz(ones)"
       address = ''

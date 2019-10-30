@@ -63,6 +63,7 @@ describe Order, type: :model do
     it "when cancelled all it's item orders status updates to unfulfilled" do
       expect(@item_order_1.status).to eq('pending')
       expect(@item_order_2.status).to eq('pending')
+
       @order_1.unfulfilled_item_orders
       expect(@item_order_1.status).to eq('unfulfilled')
       expect(@item_order_2.status).to eq('unfulfilled')
@@ -84,6 +85,13 @@ describe Order, type: :model do
       end
 
       expect(@order_1.all_items_fulfilled?).to be_truthy
+    end
+
+    it 'it increases the item inventory by the quantity ordered for a cancelled order' do
+      item_order_5 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: 'fulfilled')
+      @order_1.return_fulfilled_item_stock
+
+      expect(Item.find(@tire.id).inventory).to eq(14)
     end
   end
 

@@ -29,6 +29,15 @@ class Order <ApplicationRecord
     end
   end
 
+  def return_fulfilled_item_stock
+    fulfilled_item_orders = item_orders.where(status: 'fulfilled')
+    fulfilled_item_orders.each do |item_order|
+      current_inventory = item_order.item.inventory
+      quantity_ordered = item_order.quantity
+      item_order.item.update(inventory: (current_inventory + quantity_ordered))
+    end
+  end
+
   def items_of_merchant(merchant_id)
     items.where(merchant_id: merchant_id)
   end

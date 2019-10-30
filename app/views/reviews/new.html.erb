@@ -1,6 +1,6 @@
-<h1 align= "center">Create Review for <%= link_to @item.name, "/items/#{@item.id}" %></h1>
+<h1 align= "center">Create Review for <%= link_to @item.name, item_path(@item) %></h1>
 <center>
-  <%= form_tag "/items/#{@item.id}/reviews", method: :post do |f| %>
+  <%= form_tag item_reviews_path(@item), method: :post do |f| %>
 
     <%= label_tag :title %>
     <%= text_field_tag :title %>

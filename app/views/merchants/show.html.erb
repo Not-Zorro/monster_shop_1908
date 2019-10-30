@@ -1,8 +1,8 @@
-<h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<h1><%= link_to @merchant.name, merchant_path(@merchant) %></h1>
 <p class="address"><%= @merchant.address %></p>
 <p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
 
-<ul><%= link_to "All #{@merchant.name} Items", "/merchants/#{@merchant.id}/items" %></ul>
+<ul><%= link_to "All #{@merchant.name} Items", merchant_items_path(@merchant) %></ul>
 </ul>
 <section class = "merchant-stats">
   <h2>Number of Items: <%=@merchant.item_count%></h2>

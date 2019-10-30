@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :password, confirmation: { case_sensitive: true }
 
   has_many :orders
+  has_many :reviews
   belongs_to :merchant, optional: true
 
   has_secure_password

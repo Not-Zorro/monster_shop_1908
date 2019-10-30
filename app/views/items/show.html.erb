@@ -1,5 +1,5 @@
 <h1><%= link_to @item.name, "/items/#{@item.id}" %></h1>
-<p align="center">Sold by: <%=link_to @item.merchant.name, "/merchants/#{@item.merchant.id}" %> </p>
+<p align="center">Sold by: <%=link_to @item.merchant.name, merchant_path(@item.merchant) %> </p>
 <section align = "center" id = "average-rating">
   <p>Average Rating: <%= @item.average_review %></p>
 </section>
@@ -17,7 +17,7 @@
       <% else %>
         <p style= "color:red">Inactive</p>
       <% end %>
-      <%= link_to "Add Review", "/items/#{@item.id}/reviews/new" %>
+      <%= link_to "Add Review", new_item_review_path(@item) %>
       <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post %>
     </section>
   </section>
@@ -47,8 +47,8 @@
         <%= review.title %>
         <%= review.content %>
         Rating: <%= review.rating %>/5
-        <%= link_to "Edit", "/reviews/#{review.id}/edit" %>
-        <%= link_to "Delete", "/reviews/#{review.id}", method: :delete %>
+        <%= link_to "Edit", edit_review_path(review) %>
+        <%= link_to "Delete", review_path(review), method: :delete %>
       </section>
     <% end %>
   <% end %>

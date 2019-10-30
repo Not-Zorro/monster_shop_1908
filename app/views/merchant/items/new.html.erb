@@ -1,4 +1,4 @@
-<h1>Create New Item For <%=link_to current_user.merchant.name, "/merchants/#{current_user.merchant.id}" %></h1>
+<h1>Create New Item For <%=link_to current_user.merchant.name, merchant_path(current_user.merchant)%></h1>
 
 <center>
   <%= form_tag "/merchant/items", method: :post do %>

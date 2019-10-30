@@ -38,6 +38,7 @@ class Admin::MerchantsController < Admin::BaseController
     merchant.items.update_all(active?: false)
     flash[:success] = "#{merchant.name} has been disabled"
     redirect_to '/merchants'
+    # binding.pry
   end
 
   def enable

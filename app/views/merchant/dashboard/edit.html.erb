@@ -14,7 +14,7 @@
     <%= text_field_tag :state, "#{current_user.merchant.state}" %>
 
     <%= label_tag :zip %>
-    <%= text_field_tag :zip,"#{current_user.merchant.zip}" %>
+    <%= text_field_tag :zip,"#{current_user.merchant.zip}", pattern: "[0-9]{5}", title: 'Zip must be five digits'  %>
 
     <%= submit_tag 'Update Merchant' %>
   <% end %>

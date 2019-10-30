@@ -16,7 +16,7 @@ describe Item, type: :model do
     it {should have_many(:orders).through(:item_orders)}
   end
 
-  describe "instance methods" do
+  describe "methods" do
     before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
@@ -77,6 +77,34 @@ describe Item, type: :model do
 
       expect(@chain.status).to eq('Active')
       expect(ball.status).to eq('Inactive')
+    end
+
+    it "can calculate return top and bottom 5 items name and quantity ordered" do
+      user = User.create(name: 'Bob J', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
+
+      pull_toy = @bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      dog_leash = @bike_shop.items.create(name: "Dog Leash", description: "It's a dog leash!", price: 15, inventory: 50)
+      kong_toy = @bike_shop.items.create(name: "Kong Toy", description: "Konggggggg!", price: 30, inventory: 30)
+      dog_booties = @bike_shop.items.create(name: "Dog Booties", description: "You can walk in the snow!", price: 100, inventory: 20)
+      dog_carrier = @bike_shop.items.create(name: "Canine Sports Sack", description: "You can hike with your dog in a sack!", price: 150, inventory: 22)
+      dog_beard_butter = @bike_shop.items.create(name: "Dog Beard Butter", description: "The softest fur in barktown!", price: 20, inventory: 100)
+
+      order_1 = user.orders.create!(name: user.name, address: user.address, city: user.city, state: user.state, zip: user.zip, user_id: user.id)
+
+      item_order_1 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
+      item_order_2 = order_1.item_orders.create!(item: dog_leash, price: dog_leash.price, quantity: 2)
+      item_order_3 = order_1.item_orders.create!(item: dog_booties, price: dog_booties.price, quantity: 3)
+      item_order_4 = order_1.item_orders.create!(item: dog_carrier, price: dog_carrier.price, quantity: 4)
+      item_order_5 = order_1.item_orders.create!(item: dog_beard_butter, price: dog_beard_butter.price, quantity: 5)
+      item_order_6 = order_1.item_orders.create!(item: kong_toy, price: kong_toy.price, quantity: 6)
+
+      top_expected_hash = {kong_toy => 6, dog_beard_butter => 5, dog_carrier => 4, dog_booties => 3, dog_leash => 2}
+
+      expect(Item.all.item_stats("desc")).to eq(top_expected_hash)
+
+      bottom_expected_hash = {pull_toy => 1, dog_leash => 2, dog_booties => 3, dog_carrier => 4, dog_beard_butter => 5}
+
+      expect(Item.all.item_stats("asc")).to eq(bottom_expected_hash)
     end
   end
 end

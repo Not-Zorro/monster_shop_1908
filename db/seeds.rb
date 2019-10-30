@@ -33,12 +33,6 @@ thirty_two_gigs_of_ram = computer_store.items.create(name: "32 Gb DDR4 RAM", des
 gpu = computer_store.items.create(name: "RTX1080TI Graphics Processing Unit", description: "To keep your computer fast and you happy x2!", price: 500, inventory: 4, image: "https://eteknix-eteknixltd.netdna-ssl.com/wp-content/uploads/2017/03/DSC_3511.jpg")
 rgb_keyboard = computer_store.items.create(name: "RGB Keyboard", description: "Better gaming capabilities!", price: 60, inventory: 20, image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5707/5707081_sd.jpg")
 
-#computer_items_reviews
-ram_review_1 = thirty_two_gigs_of_ram.reviews.create(title: 'It is pretty cheap', content: "It does what it says but only gets up to 3.5 gigahertz.", rating: 3)
-ram_review_2 = thirty_two_gigs_of_ram.reviews.create(title: 'It is amazing', content: "It is sooooo fast!", rating: 5)
-ram_review_3 = thirty_two_gigs_of_ram.reviews.create(title: 'Ram is Ram', content: "It works.", rating: 4)
-ram_review_3 = thirty_two_gigs_of_ram.reviews.create(title: "This didn't have RGB. It lied!!!", content: "What a waste of money. This is trash!", rating: 1)
-
 #users
 user = User.create(name: 'Bob J', address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111, email: 'user@user.com', password: 'password' )
 
@@ -53,6 +47,12 @@ outdoor_shop_admin = outdoor_shop.users.create(name: 'Cliff Hanger', address: '5
 computer_store_admin = computer_store.users.create(name: 'Bill Gates', address: '1 Rich Ln.', city: 'Vail', state: 'Colorado', zip: 80001, email: 'merchad@computerstore.com', password: 'password', role: 2)
 
 admin = User.create(name: 'Andrea Admin', address: '2 Admin Ave', city: 'Aspen', state: 'Colorado', zip: 80111, email: 'admin@admin.com', password: 'password', role: 3)
+
+#computer_items_reviews
+ram_review_1 = thirty_two_gigs_of_ram.reviews.create(user_id: user.id, title: 'It is pretty cheap', content: "It does what it says but only gets up to 3.5 gigahertz.", rating: 3)
+ram_review_2 = thirty_two_gigs_of_ram.reviews.create(user_id: user.id, title: 'It is amazing', content: "It is sooooo fast!", rating: 5)
+ram_review_3 = thirty_two_gigs_of_ram.reviews.create(user_id: user.id, title: 'Ram is Ram', content: "It works.", rating: 4)
+ram_review_3 = thirty_two_gigs_of_ram.reviews.create(user_id: user.id, title: "This didn't have RGB. It lied!!!", content: "What a waste of money. This is trash!", rating: 1)
 
 #orders and item orders
 order_1 = user.orders.create(name: user.name, address: user.address, city: user.city, state: user.state, zip: user.zip, user_id: user.id)

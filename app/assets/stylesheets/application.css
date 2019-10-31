@@ -234,3 +234,8 @@ tr:nth-child(even) {
 .review-stats {
   padding: 10px 0px;
 }
+
+.user-snippet{
+  margin-bottom: 10px;
+  border-bottom: 3px solid #808080;
+}

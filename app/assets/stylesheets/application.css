@@ -215,3 +215,13 @@ tr:nth-child(even) {
 .button_to {
   background: white;
 }
+
+.review-highlights {
+  display: grid;
+ 	grid-template-columns: repeat(2,1fr);
+ 	grid-template-rows: auto;
+  align-items: center;
+  margin: 0 15px;
+  text-align: center;
+  padding: 25px;
+}

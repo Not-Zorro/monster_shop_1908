@@ -37,7 +37,7 @@
   <section id="item-stats-least-popular">
     <h3>Five Least Popular Items</h3>
     <% @items.item_stats("asc").each do |item, quantity| %>
-      <p><%= item.name %><p>
+      <p><%= item.name %></p>
       <p>Quantity Bought: <%= quantity %></p>
     <% end %>
   </section>

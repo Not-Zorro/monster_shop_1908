@@ -19,10 +19,12 @@ RSpec.describe 'review creation', type: :feature do
     end
 
     describe "and click on a link to add a review" do
-      xit "I can create a new review by following the link" do
+      it "I can create a new review by following the link" do
         title = "Thanks Brian's Bike Shop!"
         content = "Took my bike in for a service and all is working well!"
         rating = 5
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
         visit "/items/#{@chain.id}"
 
@@ -46,9 +48,10 @@ RSpec.describe 'review creation', type: :feature do
         end
       end
 
-      xit "I cannot create a review unless I complete the whole form" do
+      it "I cannot create a review unless I complete the whole form" do
         title = "Thanks Brian's Bike Shop!"
         rating = 5
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
         visit "/items/#{@chain.id}"
 
@@ -60,14 +63,15 @@ RSpec.describe 'review creation', type: :feature do
         click_on "Create Review"
 
         expect(page).to have_content("Please fill in all fields in order to create a review.")
-        expect(current_path).to eq("/items/#{@chain.id}/reviews/new")
+        expect(current_path).to eq("/items/#{@chain.id}/profile/reviews/new")
       end
 
-      xit 'I get an error if my rating is not between 1 and 5' do
+      it 'I get an error if my rating is not between 1 and 5' do
         title = "Thanks Brian's Bike Shop!"
         rating = 6
         content = "SO FUN SO GREAT"
-
+        
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
         visit "/items/#{@chain.id}"
 
         click_on "Add Review"

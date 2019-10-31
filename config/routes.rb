@@ -20,10 +20,11 @@ Rails.application.routes.draw do
     namespace :profile do
       get '/reviews/new', to: 'reviews#new'
       post '/reviews/create', to: 'reviews#create'
+      get '/reviews/id/edit', to: 'reviews#edit'
     end
   end
 
-  resources :reviews, only: [:edit, :update, :destroy] do
+  resources :reviews, only: [:update, :destroy] do
   end
 
   post '/cart/:item_id', to: 'cart#add_item'

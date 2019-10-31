@@ -17,7 +17,10 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
+    namespace :profile do
+      get '/reviews/new', to: 'reviews#new'
+      post '/reviews/create', to: 'reviews#create'
+    end
   end
 
   resources :reviews, only: [:edit, :update, :destroy] do

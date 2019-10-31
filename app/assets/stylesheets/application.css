@@ -66,6 +66,11 @@ section[id*='review'] {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 30px;
+  padding-bottom: 50px;
+}
+.list-reviews h2 {
+  padding: 0;
+  margin: 0;
 }
 
  .grid-container{
@@ -224,4 +229,8 @@ tr:nth-child(even) {
   margin: 0 15px;
   text-align: center;
   padding: 25px;
+}
+
+.review-stats {
+  padding: 10px 0px;
 }

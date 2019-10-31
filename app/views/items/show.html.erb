@@ -49,8 +49,10 @@
         <%= review.title %>
         <%= review.content %>
         Rating: <%= review.rating %>/5
-        <% if current_user.id == review.user_id %>
+        <% if current_user && current_user.id == review.user_id %>
           <%= link_to "Edit", "/items/#{@item.id}/profile/reviews/#{review.id}/edit" %>
+          <%= link_to "Delete", "/items/#{@item.id}/profile/reviews/#{review.id}", method: :delete %>
+        <% elsif current_admin? %>
           <%= link_to "Delete", "/items/#{@item.id}/profile/reviews/#{review.id}", method: :delete %>
         <% end %>
       </section>

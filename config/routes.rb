@@ -20,7 +20,8 @@ Rails.application.routes.draw do
     namespace :profile do
       get '/reviews/new', to: 'reviews#new'
       post '/reviews/create', to: 'reviews#create'
-      get '/reviews/id/edit', to: 'reviews#edit'
+      get '/reviews/:review_id/edit', to: 'reviews#edit'
+      patch '/reviews/:review_id', to: 'reviews#update'
     end
   end
 

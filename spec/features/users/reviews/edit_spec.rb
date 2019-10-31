@@ -18,7 +18,7 @@ RSpec.describe 'review edit and update', type: :feature do
   end
 
   describe "when I visit the item show page as a logged-in user" do
-    xit "I only see a link called Edit next to the review that I've made" do
+    it "I only see a link called Edit next to the review that I've made" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       review_1 = @chain.reviews.create!(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5, user_id: @user.id)
@@ -42,11 +42,13 @@ RSpec.describe 'review edit and update', type: :feature do
       end
     end
 
-    xit "I can edit a review when I fill in all of the fields" do
-      review_1 = @chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
+    it "I can edit a review when I fill in all of the fields" do
+      review_1 = @chain.reviews.create(user_id: @user.id, title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
       title = "Nice Bike Shop!"
       content = "It's great!"
       rating = 4
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit "/items/#{@chain.id}"
 
@@ -54,7 +56,7 @@ RSpec.describe 'review edit and update', type: :feature do
         click_on "Edit"
       end
 
-      expect(current_path).to eq("/reviews/#{review_1.id}/edit")
+      expect(current_path).to eq("/items/#{@chain.id}/profile/reviews/#{review_1.id}/edit")
       expect(find_field(:title).value).to eq(review_1.title)
       expect(find_field(:content).value).to eq(review_1.content)
       expect(find_field(:rating).value).to eq(review_1.rating.to_s)
@@ -73,10 +75,11 @@ RSpec.describe 'review edit and update', type: :feature do
       end
     end
 
-    xit "I can edit a review when I fill in just some of the fields" do
-      review_1 = @chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
+    it "I can edit a review when I fill in just some of the fields" do
+      review_1 = @chain.reviews.create(user_id: @user.id, title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
       title = "Nice Bike Shop!"
 
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       visit "/items/#{@chain.id}"
 
       within "#review-#{review_1.id}" do

@@ -17,10 +17,13 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
-  end
-
-  resources :reviews, only: [:edit, :update, :destroy] do
+    namespace :profile do
+      get '/reviews/new', to: 'reviews#new'
+      post '/reviews/create', to: 'reviews#create'
+      get '/reviews/:review_id/edit', to: 'reviews#edit'
+      patch '/reviews/:review_id', to: 'reviews#update'
+      delete '/reviews/:review_id', to: 'reviews#destroy'
+    end
   end
 
   post '/cart/:item_id', to: 'cart#add_item'

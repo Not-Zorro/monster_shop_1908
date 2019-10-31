@@ -15,7 +15,7 @@
     <%= text_field_tag :state %>
 
     <%= label_tag :zip %>
-    <%= text_field_tag :zip %>
+    <%= text_field_tag :zip, nil, pattern: "[0-9]{5}", title: 'Zip must be five digits'  %>
 
     <%= submit_tag 'Create Merchant' %>
   <% end %>

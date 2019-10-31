@@ -1,15 +1,17 @@
 <h1>Admin Dashboard</h1>
 
-<section class = 'orders'>
-  <% @sorted_orders.each do |order| %>
-    <section id = "order-<%=order.id%>">
-      <p>Ordered by: <%= link_to order.name, "/admin/users/#{order.user_id}" %></p>
-      <p>Order #: <%= order.id %></p>
-      <p>Order Date: <%= order.created_date %></p>
-      <p>Order Status: <%= order.status %></p>
-      <% if order.status == 'packaged' %>
-        <%= button_to "Ship Order", "/admin/orders/#{order.id}/ship", method: :patch %>
-      <% end %>
-    </section>
-  <% end %>
-</section>
+<center>
+  <section class = 'orders'>
+    <% @sorted_orders.each do |order| %>
+      <section id = "order-<%=order.id%>">
+        <p>Ordered by: <%= link_to order.name, "/admin/users/#{order.user_id}" %></p>
+        <p>Order #: <%= order.id %></p>
+        <p>Order Date: <%= order.created_date %></p>
+        <p>Order Status: <%= order.status %></p>
+        <% if order.status == 'packaged' %>
+          <%= button_to "Ship Order", "/admin/orders/#{order.id}/ship", method: :patch %>
+        <% end %>
+      </section>
+    <% end %>
+  </section>
+</center>

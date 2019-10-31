@@ -1,21 +1,23 @@
 <h1>Merchant Dashboard</h1>
 
-<% if current_user.merchant %>
-  <section class='employer-info'>
-      <p><%= current_user.merchant.name %></p>
-      <p><%= current_user.merchant.address %></p>
-      <p><%= current_user.merchant.city %>, <%= current_user.merchant.state %> <%= current_user.merchant.zip %></p>
-      <% if current_merchant_admin? %>
-        <%= link_to "Update Merchant", "/merchant/merchants/#{current_user.merchant.id}/edit" %>
-      <% end %>
-      <section class='pending-orders'>
-        <% current_user.merchant.pending_orders.each do |pending_order| %>
-          <%= link_to "Order #: #{pending_order.id}", "/merchant/orders/#{pending_order.id}"%>
-          <p>Order Date: <%= pending_order.created_date %></p>
-          <p>Item Total: <%= pending_order.item_count_for_merchant(current_user.merchant_id) %></p>
-          <p>Grand Total: <%= pending_order.grand_total_for_merchant(current_user.merchant_id) %></p>
-        <% end  %>
-      </section>
-      <%= link_to "My Merchant's Items", '/merchant/items' %>
-  </section>
-<% end %>
+<center>
+  <% if current_user.merchant %>
+    <section class='employer-info'>
+        <p><%= current_user.merchant.name %></p>
+        <p><%= current_user.merchant.address %></p>
+        <p><%= current_user.merchant.city %>, <%= current_user.merchant.state %> <%= current_user.merchant.zip %></p>
+        <% if current_merchant_admin? %>
+          <%= link_to "Update Merchant", "/merchant/merchants/#{current_user.merchant.id}/edit" %>
+        <% end %>
+        <section class='pending-orders'>
+          <% current_user.merchant.pending_orders.each do |pending_order| %>
+            <%= link_to "Order #: #{pending_order.id}", "/merchant/orders/#{pending_order.id}"%>
+            <p>Order Date: <%= pending_order.created_date %></p>
+            <p>Item Total: <%= pending_order.item_count_for_merchant(current_user.merchant_id) %></p>
+            <p>Grand Total: <%= pending_order.grand_total_for_merchant(current_user.merchant_id) %></p>
+          <% end  %>
+        </section>
+        <%= link_to "My Merchant's Items", '/merchant/items' %>
+    </section>
+  <% end %>
+</center>

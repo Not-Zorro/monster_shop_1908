@@ -1,8 +1,10 @@
 <h1><%= link_to @item.name, "/items/#{@item.id}" %></h1>
 <p align="center">Sold by: <%=link_to @item.merchant.name, merchant_path(@item.merchant) %> </p>
+
 <section align = "center" id = "average-rating">
   <p>Average Rating: <%= @item.average_review %></p>
 </section>
+
 <center>
   <section class = "item-show-grid">
     <section class = "item-show-item">
@@ -17,29 +19,34 @@
       <% else %>
         <p style= "color:red">Inactive</p>
       <% end %>
-      <%= link_to "Add Review", new_item_review_path(@item) %>
+      <% if current_user %>
+        <%= link_to "Add Review", "/items/#{@item.id}/profile/reviews/new" %>
+      <% end %>
       <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post %>
     </section>
   </section>
 </center>
+
 <center>
-<section class = "review-stats">
-  <%if @item.reviews.empty? %>
-    <h3>This item has not yet been reviewed.</h3>
-  <% else %>
-    <section class = "top-three-reviews">
-      <h2>Top 3 Reviews</h2>
-      <% @item.sorted_reviews(3, :desc).each do |review| %>
-        <h3><%= "#{review.rating}-#{review.title}" %></h3>
-      <% end %>
-    </section>
-    <section class = "bottom-three-reviews">
-      <h2>Bottom 3 Reviews</h2>
-      <% @item.sorted_reviews(3, :asc).each do |review| %>
-        <h3><%= "#{review.rating}-#{review.title}" %></h3>
-      <% end %>
-    </section>
-  </section>
+  <section class = "review-stats">
+    <%if @item.reviews.empty? %>
+      <h3>This item has not yet been reviewed.</h3>
+    <% else %>
+      <section class="review-highlights">
+        <section class = "top-three-reviews">
+          <h2>Top 3 Reviews</h2>
+          <% @item.sorted_reviews(3, :desc).each do |review| %>
+            <h3><%= "#{review.rating}-#{review.title}" %></h3>
+          <% end %>
+        </section>
+        <section class = "bottom-three-reviews">
+          <h2>Bottom 3 Reviews</h2>
+          <% @item.sorted_reviews(3, :asc).each do |review| %>
+            <h3><%= "#{review.rating}-#{review.title}" %></h3>
+          <% end %>
+        </section>
+      </section>
+
   <section class = "list-reviews">
     <h2>All Reviews</h2>
     <% @item.reviews.each do |review| %>
@@ -47,10 +54,17 @@
         <%= review.title %>
         <%= review.content %>
         Rating: <%= review.rating %>/5
-        <%= link_to "Edit", edit_review_path(review) %>
-        <%= link_to "Delete", review_path(review), method: :delete %>
+        <% if current_user && current_user.id == review.user_id %>
+          <%= link_to "Edit", "/items/#{@item.id}/profile/reviews/#{review.id}/edit" %>
+          <%= link_to "Delete", "/items/#{@item.id}/profile/reviews/#{review.id}", method: :delete %>
+        <% elsif current_admin? %>
+          <%= link_to "Delete", "/items/#{@item.id}/profile/reviews/#{review.id}", method: :delete %>
+        <% end %>
       </section>
+
     <% end %>
+  </section>
   <% end %>
-</section>
+  </section>
+
 </center>

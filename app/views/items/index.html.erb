@@ -26,18 +26,19 @@
   <% end %>
 </section>
 
-<section id="item-stats-most-popular">
-  <h3>Five Most Popular Items</h3>
-  <% @items.item_stats("desc").each do |item, quantity| %>
-    <%= item.name %>
-    <p>Quantity Bought: <%= quantity %></p>
-  <% end %>
-</section>
-
-<section id="item-stats-least-popular">
-  <h3>Five Least Popular Items</h3>
-  <% @items.item_stats("asc").each do |item, quantity| %>
-    <%= item.name %>
-    <p>Quantity Bought: <%= quantity %></p>
-  <% end %>
+<section class="item-statistics-box">
+  <section id="item-stats-most-popular">
+    <h3>Five Most Popular Items</h3>
+    <% @items.item_stats("desc").each do |item, quantity| %>
+      <p><%= item.name %></p>
+      <p>Quantity Bought: <%= quantity %></p>
+    <% end %>
+  </section>
+  <section id="item-stats-least-popular">
+    <h3>Five Least Popular Items</h3>
+    <% @items.item_stats("asc").each do |item, quantity| %>
+      <p><%= item.name %></p>
+      <p>Quantity Bought: <%= quantity %></p>
+    <% end %>
+  </section>
 </section>

@@ -14,6 +14,15 @@
  *= require_self
  */
 
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,600|Merriweather&display=swap');
+
+/* font-family: 'Fira Sans', sans-serif;
+font-family: 'Merriweather', serif; */
+
+ * {
+   margin: 0;
+ }
+
  body {
  background-color: white;
  }
@@ -22,7 +31,18 @@
   text-align: center;
  	font-size: 40px;
  	color: #002244;
- 	font-family: "Marker Felt", fantasy;
+  font-family: 'Fira Sans', sans-serif;
+  padding-bottom: 15px;
+ }
+
+ h2 {
+   font-family: 'Fira Sans', sans-serif;
+   padding: 2px 0px;
+ }
+
+ p {
+   font-family: 'Merriweather', serif;
+   padding: 5px 0px;
  }
 
 ul{
@@ -46,23 +66,36 @@ section[id*='review'] {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 30px;
+  padding-bottom: 50px;
+}
+.list-reviews h2 {
+  padding: 0;
+  margin: 0;
 }
 
  .grid-container{
  	display: grid;
- 	grid-template-columns: repeat(5,1fr);
+ 	grid-template-columns: repeat(4,1fr);
  	grid-template-rows: auto;
  	grid-gap: 30px;
+  margin: 0 15px;
  }
 
  .grid-item{
- 	background-color: #17BEBB;
  	padding: 20px;
-  border: solid;
- 	border-radius: 12px;
-  border-color: #002244;
- 	text-align: center
+  border: 1px solid gray;
+ 	border-radius: 10px;
+ 	text-align: center;
  }
+
+ .grid-item img {
+  padding: 20px;
+ }
+
+ .griditem, a {
+  text-decoration: none;
+ }
+
  .item-show-grid{
   width: 60%;
  	display: grid;
@@ -74,11 +107,14 @@ section[id*='review'] {
  .item-show-item{
  	padding: 20px;
  	text-align: right;
+  align-self: center;
  }
 
  .topnav {
    overflow: hidden;
    background-color: #002244;
+   margin-bottom: 1.5rem;
+   font-family: 'Fira Sans', sans-serif;
  }
 
  .topnav a, .topnav div {
@@ -155,4 +191,51 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+.item-statistics-box {
+  display: grid;
+ 	grid-template-columns: repeat(2,1fr);
+ 	grid-template-rows: auto;
+  align-items: center;
+  margin: 0 15px;
+  text-align: center;
+  padding: 25px;
+}
+
+.merchant-stats {
+  text-align: center;
+  margin: 20px;
+}
+
+.user-profile-links a {
+  padding: 1px;
+  margin: 0px 10px;
+}
+
+.pending-orders {
+  padding: 25px;
+}
+
+.button_to {
+  background: white;
+}
+
+.review-highlights {
+  display: grid;
+ 	grid-template-columns: repeat(2,1fr);
+ 	grid-template-rows: auto;
+  align-items: center;
+  margin: 0 15px;
+  text-align: center;
+  padding: 25px;
+}
+
+.review-stats {
+  padding: 10px 0px;
+}
+
+.user-snippet{
+  margin-bottom: 10px;
+  border-bottom: 3px solid #808080;
 }

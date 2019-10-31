@@ -1,4 +1,9 @@
-class ReviewsController<ApplicationController
+class Profile::ReviewsController<ApplicationController
+  before_action :require_user
+
+  def require_user
+    render file: '/public/404' unless current_user
+  end
 
   def new
     @item = Item.find(params[:item_id])
@@ -8,7 +13,7 @@ class ReviewsController<ApplicationController
     if field_empty?
       item = Item.find(params[:item_id])
       flash[:error] = "Please fill in all fields in order to create a review."
-      redirect_to "/items/#{item.id}/reviews/new"
+      redirect_to "/items/#{item.id}/profile/reviews/new"
     else
       @item = Item.find(params[:item_id])
       review = @item.reviews.create(review_params)
@@ -23,17 +28,17 @@ class ReviewsController<ApplicationController
   end
 
   def edit
-    @review = Review.find(params[:id])
+    @review = Review.find(params[:review_id])
   end
 
   def update
-    review = Review.find(params[:id])
+    review = Review.find(params[:review_id])
     review.update(review_params)
     redirect_to "/items/#{review.item.id}"
   end
 
   def destroy
-    review = Review.find(params[:id])
+    review = Review.find(params[:review_id])
     item = review.item
     review.destroy
     redirect_to "/items/#{item.id}"
@@ -42,11 +47,13 @@ class ReviewsController<ApplicationController
   private
 
   def review_params
-    params.permit(:title,:content,:rating)
+    params.permit(:title,:content,:rating).merge(:user_id => current_user.id)
   end
 
   def field_empty?
     params = review_params
     params[:title].empty? || params[:content].empty? || params[:rating].empty?
   end
+
+
 end

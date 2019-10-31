@@ -1,17 +1,21 @@
 <h1>Profile for <%= current_user.name %></h1>
 
-<section class = "user-profile">
-  <p>Name: <%= current_user.name  %></p>
-  <p>Address: <%= current_user.address  %></p>
-  <p>City: <%= current_user.city  %></p>
-  <p>State: <%= current_user.state  %></p>
-  <p>Zip: <%= current_user.zip  %></p>
-  <p>Email: <%= current_user.email  %></p>
-</section>
+<center>
+  <section class="user-profile">
+    <p>Name: <%= current_user.name  %></p>
+    <p>Address: <%= current_user.address  %></p>
+    <p>City: <%= current_user.city  %></p>
+    <p>State: <%= current_user.state  %></p>
+    <p>Zip: <%= current_user.zip  %></p>
+    <p>Email: <%= current_user.email  %></p>
+  </section>
 
-<%= link_to 'Edit Profile', "/profile/edit" %>
-<%= link_to 'Change Password', "/profile/change-password" %>
+  <section class="user-profile-links">
+    <%= link_to 'Edit Profile', "/profile/edit" %>
+    <%= link_to 'Change Password', "/profile/change-password" %>
 
-<% if current_user.has_orders? %>
-  <%= link_to 'My Orders', '/profile/orders' %>
-<% end %>
+    <% if current_user.has_orders? %>
+      <%= link_to 'My Orders', '/profile/orders' %>
+    <% end %>
+  </section>
+</center>

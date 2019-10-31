@@ -102,6 +102,7 @@ section[id*='review'] {
  .item-show-item{
  	padding: 20px;
  	text-align: right;
+  align-self: center;
  }
 
  .topnav {

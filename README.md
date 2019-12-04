@@ -24,9 +24,6 @@ Backend Engineering Rails Group Project
 
 ## Requirements
 
-- must use Rails 5.1.x
-- must use PostgreSQL
-- must use 'bcrypt' for authentication
-- all controller and model code must be tested via feature tests and model tests, respectively
-- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like waffle.io
-- must include a thorough README to describe their project
+- use Rails 5.1.x
+- use PostgreSQL
+- use 'bcrypt' for authentication
